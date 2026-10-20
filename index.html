@@ -451,11 +451,6 @@
 
             let catatan = row.Catatan && row.Catatan.trim() !== "" ? row.Catatan : "<em>Belum ada catatan PGA.</em>";
 
-            let linkFoto = "";
-            if (row.File_Penunjang && row.File_Penunjang.startsWith("http")) {
-              linkFoto = `<br><a href="${row.File_Penunjang}" target="_blank" class="btn-file-link"><i class="fa-solid fa-image"></i> Lihat Foto</a>`;
-            }
-
             tbody.innerHTML += `
               <tr>
                 <td>
@@ -473,7 +468,6 @@
                 <td>${row.Indikasi || "-"}</td>
                 <td>
                   ${row.Alasan || "-"}
-                  ${linkFoto}
                 </td>
                 <td><span class="badge ${badgeClass}">${statusTeks}</span></td>
                 <td style="font-size: 12px;">${catatan}</td>
