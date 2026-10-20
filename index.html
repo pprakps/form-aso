@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulir Evaluasi ATO & ASO</title>
+  <title>Formulir Evaluasi ATO (Antibiotic Time Out & ASO (Antibiotic Stop Order)</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
@@ -11,7 +11,10 @@
       --primary: #0056b3;      
       --primary-hover: #004494;
       --secondary: #0d6efd;    
-      --bg-color: #e6f2ff;     
+      --bg-color: #eaf4fc;     /* Warna biru muda untuk background luar (sesuai gambar) */
+      --form-bg: #ffffff;      /* Warna putih bersih untuk kotak form */
+      --label-color: #003366;  /* Biru gelap untuk teks judul isian */
+      --input-border: #b3d7ff; /* Biru muda untuk garis pinggir kolom isian */
       --success: #198754;
       --danger: #dc3545;
       --warning: #ffc107;
@@ -23,16 +26,16 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: var(--bg-color);
       margin: 0;
-      padding: 20px;
+      padding: 30px 20px; 
       color: #333;
     }
 
     .container {
-      max-width: 1050px; /* Diperlebar lagi karena tabel tambah panjang */
+      max-width: 1050px; 
       margin: 0 auto;
-      background: #fff;
+      background-color: var(--form-bg); 
       border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       overflow: hidden; 
     }
 
@@ -70,13 +73,13 @@
       display: block;
       font-weight: bold;
       margin-bottom: 5px;
-      color: #003366; 
+      color: var(--label-color); /* Warna font label jadi biru gelap */
     }
 
     input[type="text"], select, textarea, input[type="file"] {
       width: 100%;
       padding: 10px;
-      border: 1px solid #b3d7ff;
+      border: 1px solid var(--input-border); /* Garis border biru muda */
       border-radius: 4px;
       box-sizing: border-box;
       font-family: inherit;
@@ -165,7 +168,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 12px; /* Dikecilkan sedikit agar 9 kolom muat rapi */
+      font-size: 12px; 
     }
 
     th, td {
@@ -198,34 +201,16 @@
     .badge-ditolak { background-color: var(--danger); }
     .badge-ditunda { background-color: var(--warning); color: #000; }
     .badge-catatan { background-color: var(--info); color: #000; }
-
-    .btn-file-link {
-      display: inline-block;
-      margin-top: 6px;
-      padding: 4px 8px;
-      background-color: #e7f1ff;
-      color: #0d6efd;
-      border: 1px solid #b6d4fe;
-      border-radius: 4px;
-      text-decoration: none;
-      font-size: 11px;
-      font-weight: bold;
-    }
-    .btn-file-link:hover {
-      background-color: #0d6efd;
-      color: white;
-    }
   </style>
 </head>
 <body>
 
-  <div class="header-banner">
-      <!-- TAMBAHAN HEADER NAMA RSUD -->
+  <div class="container">
+    <div class="header-banner">
       <h4 style="margin: 0 0 10px 0; font-size: 15px; color: #ffdc40; letter-spacing: 0.5px;">
         <i class="fa-solid fa-hospital"></i> RSUD dr. H. Soemarno Sosroatmodjo Kuala Kapuas
       </h4>
-      
-      <h2>Formulir Evaluasi ATO & ASO</h2>
+      <h2>Formulir Evaluasi ATO (Antibiotic Time Out) & ASO (Automatic Stop Order)</h2>
       <p>Permintaan Perpanjangan Terapi</p>
     </div>
 
@@ -257,14 +242,14 @@
           </select>
         </div>
         
-        <!-- DROPDOWN JENIS PERMINTAAN BARU -->
+        <!-- DROPDOWN JENIS PERMINTAAN DENGAN STYLE WARNA DI FORM -->
         <div class="form-group">
           <label>Jenis Permintaan</label>
-          <select id="Jenis_Permintaan" required>
-            <option value="" disabled selected>-- Pilih Jenis Permintaan --</option>
-            <option value="ATO >3 hari">ATO >3 hari</option>
-            <option value="ATO >5 hari">ATO >5 hari</option>
-            <option value="ASO >7 hari">ASO >7 hari</option>
+          <select id="Jenis_Permintaan" required style="font-weight: bold;">
+            <option value="" disabled selected style="color: black; font-weight: normal;">-- Pilih Jenis Permintaan --</option>
+            <option value="ATO >3 hari" style="color: #003366; font-weight: bold;">ATO >3 hari</option>
+            <option value="ATO >5 hari" style="color: #0f5132; font-weight: bold;">ATO >5 hari</option>
+            <option value="ASO >7 hari" style="color: #842029; font-weight: bold;">ASO >7 hari</option>
           </select>
         </div>
 
@@ -301,13 +286,11 @@
           <input type="file" id="Penunjang_Mikrobiologi" accept="image/*">
         </div>
 
-        <!-- Label Alasan Diubah -->
         <div class="form-group">
           <label>Alasan Perpanjangan Terapi</label>
           <textarea id="Alasan" placeholder="Jelaskan alasan mengapa terapi antibiotik ini diperpanjang..." required></textarea>
         </div>
 
-        <!-- Tulisan Button Diubah -->
         <button type="submit" id="btnSubmit" class="btn-submit">
           <span id="btnText">Kirim Permintaan</span>
           <i id="loadingSpinner" class="fa-solid fa-spinner fa-spin" style="display: none;"></i>
@@ -330,7 +313,7 @@
               <th>Pasien / RM / DPJP</th>
               <th>Diagnosa</th>
               <th>Ruangan</th>
-              <th>Jenis Permintaan</th> <!-- Kolom Baru -->
+              <th>Jenis Permintaan</th>
               <th>Antibiotik / Dosis</th>
               <th>Indikasi</th>
               <th>Alasan</th>
@@ -348,7 +331,21 @@
 
   <script>
     // ⚠️ MASUKKAN URL WEB APP ANDA DI SINI
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwvtj_IGmAdHqc1CouFGSnyVcR233Q7jSEh9EfKONhSCmEA6PVOWRWzLxpLrbMN7NVMbg/exec"; 
+    const WEB_APP_URL = "https://script.google.com/macros/s/GANTI_DENGAN_URL_ASO_ANDA/exec"; 
+
+    // SCRIPT UNTUK MENGUBAH WARNA DROPDOWN SAAT DIPILIH
+    const dropdownJenis = document.getElementById("Jenis_Permintaan");
+    dropdownJenis.addEventListener("change", function() {
+      if (this.value === "ATO >3 hari") {
+        this.style.color = "#003366"; // Biru Tua
+      } else if (this.value === "ATO >5 hari") {
+        this.style.color = "#0f5132"; // Hijau Tua
+      } else if (this.value === "ASO >7 hari") {
+        this.style.color = "#842029"; // Merah Tua
+      } else {
+        this.style.color = "black";
+      }
+    });
 
     document.getElementById("asoForm").addEventListener("submit", function(e) {
       e.preventDefault();
@@ -368,7 +365,7 @@
         formData.append("Nama_Pasien", document.getElementById("Nama_Pasien").value);
         formData.append("No_RM", document.getElementById("No_RM").value);
         formData.append("Ruangan", document.getElementById("ruangan").value);
-        formData.append("Jenis_Permintaan", document.getElementById("Jenis_Permintaan").value); // Data Baru
+        formData.append("Jenis_Permintaan", document.getElementById("Jenis_Permintaan").value); 
         formData.append("Nama_DPJP", document.getElementById("Nama_DPJP").value);
         formData.append("Diagnosa", document.getElementById("Diagnosa").value);
         formData.append("Antibiotik", document.getElementById("Antibiotik").value); 
@@ -385,6 +382,7 @@
         .then(() => {
           alert("Pemberitahuan: Formulir Evaluasi berhasil dikirim ke Dasbor Tim PGA.");
           document.getElementById("asoForm").reset();
+          dropdownJenis.style.color = "black"; // Reset warna dropdown
           resetTombolKirim();
           setTimeout(muatStatus, 2000); 
         })
@@ -416,14 +414,13 @@
 
     function resetTombolKirim() {
       const btn = document.getElementById("btnSubmit");
-      document.getElementById("btnText").innerText = "Kirim Permintaan"; // Teks Reset Button
+      document.getElementById("btnText").innerText = "Kirim Permintaan";
       document.getElementById("loadingSpinner").style.display = "none";
       btn.disabled = false;
     }
 
     function muatStatus() {
       const tbody = document.getElementById("tabelStatus");
-      // colspan diubah menjadi 9 karena ada kolom Jenis Permintaan
       tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 24px; color: var(--primary);"><i class="fa-solid fa-spinner fa-spin"></i> Sedang memuat data antrean terbaru...</td></tr>';
 
       fetch(WEB_APP_URL)
@@ -454,6 +451,16 @@
 
             let catatan = row.Catatan && row.Catatan.trim() !== "" ? row.Catatan : "<em>Belum ada catatan PGA.</em>";
 
+            // LOGIKA PEWARNAAN TEXT JENIS PERMINTAAN DI TABEL
+            let warnaJenis = "#333"; // Default text color
+            if (row.Jenis_Permintaan === "ATO >3 hari") {
+              warnaJenis = "#003366"; // Biru Tua
+            } else if (row.Jenis_Permintaan === "ATO >5 hari") {
+              warnaJenis = "#0f5132"; // Hijau Tua
+            } else if (row.Jenis_Permintaan === "ASO >7 hari") {
+              warnaJenis = "#842029"; // Merah Tua
+            }
+
             tbody.innerHTML += `
               <tr>
                 <td>
@@ -463,15 +470,16 @@
                 </td>
                 <td>${row.Diagnosa || "-"}</td>
                 <td><span style="font-weight: bold; color: var(--primary);">${row.Ruangan || "-"}</span></td>
-                <td><span style="font-weight: bold; color: #198754;">${row.Jenis_Permintaan || "-"}</span></td> <!-- Data Kolom Baru -->
+                
+                <!-- KOLOM JENIS PERMINTAAN YANG SUDAH DIWARNAI -->
+                <td><span style="font-weight: bold; font-size: 13px; color: ${warnaJenis};">${row.Jenis_Permintaan || "-"}</span></td> 
+                
                 <td>
                   <strong>${row.Antibiotik || "-"}</strong><br>
                   <span style="font-size: 12px; color: var(--text-muted);">${row.Regimen_Dosis || "-"}</span>
                 </td>
                 <td>${row.Indikasi || "-"}</td>
-                <td>
-                  ${row.Alasan || "-"}
-                </td>
+                <td>${row.Alasan || "-"}</td>
                 <td><span class="badge ${badgeClass}">${statusTeks}</span></td>
                 <td style="font-size: 12px;">${catatan}</td>
               </tr>
