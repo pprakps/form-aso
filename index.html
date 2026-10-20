@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulir Evaluasi ASO</title>
-  <!-- Menambahkan FontAwesome untuk ikon -->
+  <title>Formulir Evaluasi ATO & ASO</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
@@ -29,7 +28,7 @@
     }
 
     .container {
-      max-width: 950px; 
+      max-width: 1050px; /* Diperlebar lagi karena tabel tambah panjang */
       margin: 0 auto;
       background: #fff;
       border-radius: 8px;
@@ -45,13 +44,13 @@
     }
     .header-banner h2 {
       margin: 0;
-      font-size: 24px;
+      font-size: 22px;
       color: white;
-      line-height: 1.3;
+      line-height: 1.4;
     }
     .header-banner p {
       margin: 5px 0 0 0;
-      font-size: 14px;
+      font-size: 15px;
       color: #cce5ff;
     }
 
@@ -166,12 +165,12 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 13px; 
+      font-size: 12px; /* Dikecilkan sedikit agar 9 kolom muat rapi */
     }
 
     th, td {
       border: 1px solid #cce5ff;
-      padding: 10px;
+      padding: 8px;
       text-align: left;
       vertical-align: top; 
     }
@@ -200,14 +199,31 @@
     .badge-ditunda { background-color: var(--warning); color: #000; }
     .badge-catatan { background-color: var(--info); color: #000; }
 
+    .btn-file-link {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 8px;
+      background-color: #e7f1ff;
+      color: #0d6efd;
+      border: 1px solid #b6d4fe;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    .btn-file-link:hover {
+      background-color: #0d6efd;
+      color: white;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
     <div class="header-banner">
-      <h2>Formulir Evaluasi Automatic Stop Order</h2>
-      <p>untuk Permintaan Perpanjangan Terapi</p>
+      <!-- Judul Diubah -->
+      <h2>Formulir Evaluasi ATO (Antibiotic Time Out) & ASO (Automatic Stop Order)</h2>
+      <p>Permintaan Perpanjangan Terapi</p>
     </div>
 
     <div class="form-body">
@@ -237,6 +253,18 @@
             <option value="VK">VK</option>
           </select>
         </div>
+        
+        <!-- DROPDOWN JENIS PERMINTAAN BARU -->
+        <div class="form-group">
+          <label>Jenis Permintaan</label>
+          <select id="Jenis_Permintaan" required>
+            <option value="" disabled selected>-- Pilih Jenis Permintaan --</option>
+            <option value="ATO >3 hari">ATO >3 hari</option>
+            <option value="ATO >5 hari">ATO >5 hari</option>
+            <option value="ASO >7 hari">ASO >7 hari</option>
+          </select>
+        </div>
+
         <div class="form-group">
           <label>Nama DPJP</label>
           <input type="text" id="Nama_DPJP" placeholder="Masukkan nama Dokter Penanggung Jawab" required>
@@ -246,7 +274,6 @@
           <input type="text" id="Diagnosa" placeholder="Masukkan diagnosa klinis" required>
         </div>
         
-        <!-- Field Antibiotik Diubah Menjadi Input Manual -->
         <div class="form-group">
           <label>Antibiotik</label>
           <input type="text" id="Antibiotik" placeholder="Ketik nama antibiotik yang digunakan" required>
@@ -266,20 +293,20 @@
           </select>
         </div>
         
-        <!-- Field Alasan disesuaikan -->
         <div class="form-group">
-          <label>Alasan Perpanjangan Terapi >7 hari</label>
-          <textarea id="Alasan" placeholder="Jelaskan alasan mengapa terapi antibiotik ini diperpanjang..." required></textarea>
-        </div>
-
-        <!-- Field Lampiran disesuaikan -->
-        <div class="form-group">
-          <label>Penunjang Mikrobiologi (Opsional / Jika Ada - Maks. 5MB)</label>
+          <label>Penunjang Mikrobiologi (Upload Foto Kultur / Bukti Pendukung - Maks. 5MB)</label>
           <input type="file" id="Penunjang_Mikrobiologi" accept="image/*">
         </div>
 
+        <!-- Label Alasan Diubah -->
+        <div class="form-group">
+          <label>Alasan Perpanjangan Terapi</label>
+          <textarea id="Alasan" placeholder="Jelaskan alasan mengapa terapi antibiotik ini diperpanjang..." required></textarea>
+        </div>
+
+        <!-- Tulisan Button Diubah -->
         <button type="submit" id="btnSubmit" class="btn-submit">
-          <span id="btnText">Kirim Evaluasi ASO ke Dasbor PGA</span>
+          <span id="btnText">Kirim Permintaan</span>
           <i id="loadingSpinner" class="fa-solid fa-spinner fa-spin" style="display: none;"></i>
         </button>
       </form>
@@ -287,7 +314,7 @@
       <hr>
 
       <div class="status-header-container">
-        <h3>Status Evaluasi ASO</h3>
+        <h3>Status Evaluasi Permintaan</h3>
         <button type="button" class="btn-refresh" onclick="muatStatus()">
           <i class="fa-solid fa-rotate-right"></i> Refresh Data
         </button>
@@ -300,9 +327,10 @@
               <th>Pasien / RM / DPJP</th>
               <th>Diagnosa</th>
               <th>Ruangan</th>
+              <th>Jenis Permintaan</th> <!-- Kolom Baru -->
               <th>Antibiotik / Dosis</th>
               <th>Indikasi</th>
-              <th>Alasan Perpanjangan</th>
+              <th>Alasan & Mikrobiologi</th>
               <th>Status</th>
               <th>Catatan Tim PGA</th>
             </tr>
@@ -316,8 +344,8 @@
   </div>
 
   <script>
-    // ⚠️ MASUKKAN URL WEB APP DARI DEPLOYMENT SCRIPT ASO ANDA DI SINI
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzRnn2s6U20wTwEnnrdg4q5UN69u10eYrT6s1lSxc3ScsS0kT21KRkE2rgAxpxbJ4GoMA/exec"; 
+    // ⚠️ MASUKKAN URL WEB APP ANDA DI SINI
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxW5vL8JWEYSyM5NhG0Bi0_F_6ZTBSsBTViaWwDvz1uB5AzK3Gf5FSOqJSUWiQpJ4_wag/exec"; 
 
     document.getElementById("asoForm").addEventListener("submit", function(e) {
       e.preventDefault();
@@ -336,10 +364,11 @@
         const formData = new URLSearchParams();
         formData.append("Nama_Pasien", document.getElementById("Nama_Pasien").value);
         formData.append("No_RM", document.getElementById("No_RM").value);
-        formData.append("Ruangan", document.getElementById("ruangan").value); 
+        formData.append("Ruangan", document.getElementById("ruangan").value);
+        formData.append("Jenis_Permintaan", document.getElementById("Jenis_Permintaan").value); // Data Baru
         formData.append("Nama_DPJP", document.getElementById("Nama_DPJP").value);
         formData.append("Diagnosa", document.getElementById("Diagnosa").value);
-        formData.append("Antibiotik", document.getElementById("Antibiotik").value); // Sekarang Input Manual
+        formData.append("Antibiotik", document.getElementById("Antibiotik").value); 
         formData.append("Regimen_Dosis", document.getElementById("Regimen_Dosis").value);
         formData.append("Indikasi", document.getElementById("Indikasi").value);
         formData.append("Alasan", document.getElementById("Alasan").value);
@@ -351,7 +380,7 @@
           body: formData
         })
         .then(() => {
-          alert("Pemberitahuan: Formulir Evaluasi ASO berhasil dikirim ke Dasbor Tim PGA.");
+          alert("Pemberitahuan: Formulir Evaluasi berhasil dikirim ke Dasbor Tim PGA.");
           document.getElementById("asoForm").reset();
           resetTombolKirim();
           setTimeout(muatStatus, 2000); 
@@ -384,14 +413,15 @@
 
     function resetTombolKirim() {
       const btn = document.getElementById("btnSubmit");
-      document.getElementById("btnText").innerText = "Kirim Evaluasi ASO ke Dasbor PGA";
+      document.getElementById("btnText").innerText = "Kirim Permintaan"; // Teks Reset Button
       document.getElementById("loadingSpinner").style.display = "none";
       btn.disabled = false;
     }
 
     function muatStatus() {
       const tbody = document.getElementById("tabelStatus");
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding: 24px; color: var(--primary);"><i class="fa-solid fa-spinner fa-spin"></i> Sedang memuat data antrean terbaru...</td></tr>';
+      // colspan diubah menjadi 9 karena ada kolom Jenis Permintaan
+      tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 24px; color: var(--primary);"><i class="fa-solid fa-spinner fa-spin"></i> Sedang memuat data antrean terbaru...</td></tr>';
 
       fetch(WEB_APP_URL)
         .then(response => response.json())
@@ -399,7 +429,7 @@
           tbody.innerHTML = "";
           
           if(data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding: 24px; color: var(--text-muted);">Belum ada antrean evaluasi ASO saat ini.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 24px; color: var(--text-muted);">Belum ada antrean evaluasi saat ini.</td></tr>';
             return;
           }
           
@@ -421,6 +451,11 @@
 
             let catatan = row.Catatan && row.Catatan.trim() !== "" ? row.Catatan : "<em>Belum ada catatan PGA.</em>";
 
+            let linkFoto = "";
+            if (row.File_Penunjang && row.File_Penunjang.startsWith("http")) {
+              linkFoto = `<br><a href="${row.File_Penunjang}" target="_blank" class="btn-file-link"><i class="fa-solid fa-image"></i> Lihat Foto</a>`;
+            }
+
             tbody.innerHTML += `
               <tr>
                 <td>
@@ -430,12 +465,16 @@
                 </td>
                 <td>${row.Diagnosa || "-"}</td>
                 <td><span style="font-weight: bold; color: var(--primary);">${row.Ruangan || "-"}</span></td>
+                <td><span style="font-weight: bold; color: #198754;">${row.Jenis_Permintaan || "-"}</span></td> <!-- Data Kolom Baru -->
                 <td>
                   <strong>${row.Antibiotik || "-"}</strong><br>
                   <span style="font-size: 12px; color: var(--text-muted);">${row.Regimen_Dosis || "-"}</span>
                 </td>
                 <td>${row.Indikasi || "-"}</td>
-                <td>${row.Alasan || "-"}</td>
+                <td>
+                  ${row.Alasan || "-"}
+                  ${linkFoto}
+                </td>
                 <td><span class="badge ${badgeClass}">${statusTeks}</span></td>
                 <td style="font-size: 12px;">${catatan}</td>
               </tr>
@@ -444,7 +483,7 @@
         })
         .catch(error => {
           console.error("Error Fetch:", error);
-          tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding: 24px; color: var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> Gagal memuat data antrean. Pastikan URL Web App valid.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding: 24px; color: var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> Gagal memuat data antrean. Pastikan URL Web App valid.</td></tr>';
         });
     }
 
